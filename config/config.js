@@ -1,8 +1,7 @@
 const env = process.env.NODE_ENV; // 'dev' or 'prod'
 
 const dev = {
-    ip_address : '0.0.0.0',
-    //port : 8080,
+    frontURL : 'http://localhost:4200',
     sqlConn : {
         user:  "sa",
         password: "vladimir",
@@ -17,8 +16,7 @@ const dev = {
 };
 
 const prod = {
-    ip_address : '0.0.0.0',
-    //port : 8080,
+    frontURL : 'http://localhost:4200',
     sqlConn : {
         user:  "sa",
         password: "vladimir",

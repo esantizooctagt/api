@@ -12,11 +12,20 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const config = require('./config/config');
+const frontURL = config.frontURL;
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", frontURL);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 //app.use(session({secret: 'vladimir',saveUninitialized: true,resave: true}));
 app.use(logger('dev'));
