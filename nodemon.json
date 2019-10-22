@@ -1,0 +1,18 @@
+{
+    "env" : {
+        "JWT_KEY" : "OctaGTOnline3652019",
+        "frontURL" : "http://localhost:4200",
+        "sqlConn" : { 
+            "user" :  "sa", 
+            "password" : "vladimir", 
+            "server" : "PC-ERICK", 
+            "database" : "OCTAGT", 
+            "pool" : 
+                { 
+                    "max" : 10, 
+                    "min" : 0, 
+                    "idleTimeoutMillis" : 30000 
+                }
+            }
+    }
+}

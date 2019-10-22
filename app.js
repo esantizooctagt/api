@@ -1,61 +1,93 @@
-var createError = require('http-errors');
-var express = require('express');
-//var session = require('express-session');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-// Erick
-var bodyParser = require("body-parser");
-var helmet = require('helmet')
+const express = require('express');
+const app = express();
 
-var logger = require('morgan');
+//const path = require('path');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const bodyParser = require("body-parser");
+const db = require('./config/database');
+/*const Sequelize = require('sequelize');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const sequelize = new Sequelize('OCTAGT', 'sa', 'vladimir', {
+  host: 'localhost',
+  dialect: 'mssql',
+  pool : 
+    { 
+      max : 10, 
+      min : 0, 
+      idleTimeoutMillis : 30000 
+    },
+  define: {
+      // The `timestamps` field specify whether or not the `createdAt` and `updatedAt` fields will be created.
+      // This was true by default, but now is false by default
+      timestamps: false
+    }
+});
+*/
+db
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
-const config = require('./config/config');
-const frontURL = config.frontURL;
+//const cashiersRouter = require('./routes/cashiers');
+//const companiesRouter = require('./routes/companies');
+//const customersRouter = require('./routes/customers');
+//const documentsRouter = require('./routes/documents');
+//const invoicesRouter = require('./routes/invoices');
+//const productsRouter = require('./routes/products');
+//const storesRouter = require('./routes/stores');
+//const subscriptionsRouter = require('./routes/subscriptions');
+const taxesRouter = require('./routes/taxes');
+const usersRouter = require('./routes/users');
 
-var app = express();
+const frontURL = process.env.frontURL;
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.use(morgan('dev'));
+app.use(helmet());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", frontURL);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  if (req.method === 'OPTIONS'){
+    res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET');
+    return res.status(200).json({});
+  }
   next();
 });
 
-//app.use(session({secret: 'vladimir',saveUninitialized: true,resave: true}));
-app.use(logger('dev'));
-app.use(helmet());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Body Parser Middleware
-// Erick
-app.use(bodyParser.json()); 
-
-app.use('/', indexRouter);
+/*app.use('/cashiers', cashiersRouter);
+app.use('/companies', companiesRouter);
+app.use('/customers', customersRouter);
+app.use('/documents', documentsRouter);
+app.use('/invoices', invoicesRouter);
+app.use('/products', productsRouter);
+app.use('/stores', storesRouter);
+app.use('/subscriptions', subscriptionsRouter);*/
+app.use('/taxes', taxesRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use((req, res, next) => {
+  const error = new Error('Not found');
+  error.status = 404;
+  next(error);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    error: {
+      message: err.message
+    }
+  })
 });
 
 module.exports = app;
