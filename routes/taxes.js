@@ -10,7 +10,7 @@ router.get('/:taxId', checkAuth, TaxesController.tax_get_one);
 
 router.post('/', checkAuth, TaxesController.create_tax);
 
-router.patch('/', checkAuth, TaxesController.update_tax);
+router.patch('/:taxId', checkAuth, TaxesController.update_tax);
 
 router.delete('/:taxId', checkAuth, TaxesController.delete_tax);
 

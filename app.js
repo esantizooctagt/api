@@ -6,24 +6,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const db = require('./config/database');
-/*const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('OCTAGT', 'sa', 'vladimir', {
-  host: 'localhost',
-  dialect: 'mssql',
-  pool : 
-    { 
-      max : 10, 
-      min : 0, 
-      idleTimeoutMillis : 30000 
-    },
-  define: {
-      // The `timestamps` field specify whether or not the `createdAt` and `updatedAt` fields will be created.
-      // This was true by default, but now is false by default
-      timestamps: false
-    }
-});
-*/
 db
   .authenticate()
   .then(() => {
