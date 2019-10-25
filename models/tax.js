@@ -1,49 +1,14 @@
-const Sequelize = require('sequelize');
-const db = require('../config/database');
+const mongoose = require('mongoose');
 
-const Tax = db.define('taxes', {
-    TaxId: {
-        type: Sequelize.UUIDV4,
-        primaryKey: true,
-        allowNull: false,
-        autoIncrement: true
-    },
-    CompanyId: {
-        type: Sequelize.UUID,
-        allowNull: false,
-        validate: {
-            isUUID: 4
-        }
-    },
-    Name: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    Percentage: {
-        type: Sequelize.DECIMAL(18,2),
-        allowNull: false,
-        validate: {
-            isDecimal: true
-        }
-    },
-    Include_Tax: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-    },
-    Status: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 1
-    },
-    Create_Date: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW
-    },
-    Modified_Date: {
-        type: Sequelize.DATE
-    }
-})
+const taxSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    Name: { type: String, required: true },
+    Percentage: { type: Number, required: true },
+    Include_Tax: { type: Boolean, required: true },
+    Status: { type: Number, required: true },
+    CompanyId: { type:mongoose.Schema.Types.ObjectId, required: true, ref = 'Company' },
+    Create_Date: { type: Date, required: true, default: Date.now },
+    Modified_Date: Date
+});
 
-module.exports = Tax;
+module.exports = mongoose.model('Tax', taxSchema);

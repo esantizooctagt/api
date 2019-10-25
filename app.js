@@ -5,33 +5,7 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
-const db = require('./config/database');
-/*const Sequelize = require('sequelize');
-
-const sequelize = new Sequelize('OCTAGT', 'sa', 'vladimir', {
-  host: 'localhost',
-  dialect: 'mssql',
-  pool : 
-    { 
-      max : 10, 
-      min : 0, 
-      idleTimeoutMillis : 30000 
-    },
-  define: {
-      // The `timestamps` field specify whether or not the `createdAt` and `updatedAt` fields will be created.
-      // This was true by default, but now is false by default
-      timestamps: false
-    }
-});
-*/
-db
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+const mongoose = require('mongoose');
 
 //const cashiersRouter = require('./routes/cashiers');
 //const companiesRouter = require('./routes/companies');
@@ -45,6 +19,16 @@ const taxesRouter = require('./routes/taxes');
 const usersRouter = require('./routes/users');
 
 const frontURL = process.env.frontURL;
+setTimeout(function() {
+  mongoose.connect(
+    "mongodb+srv://" + process.env.MONG_USR + ":" + process.env.MONG_PWD + "@clusoctagt-u7ryt.mongodb.net/OCTAGT?retryWrites=true&w=majority",
+      { 
+        useUnifiedTopology: true,
+        useNewUrlParser: true    
+      }
+    );
+}, 30000);
+mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));
 app.use(helmet());
