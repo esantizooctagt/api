@@ -18,17 +18,31 @@ const companySchema = mongoose.Schema({
         House_No: { type: String, required: false },
         Postal_Code: { type: String, required: false },
         Tax_Number: { type: String, required: true },
-        Status: { type: Number, required:true, Default: 0 },
+        Cashiers_No: { type: Number, required: true, Default: 1 },
         Cashiers: [{
             Cashier_Id: { type: mongoose.Schema.Types.ObjectId, required: true, ref = 'Cashier' },
             Description: { type: String, required: true },
-            Status: { type: Number, required:true, Default: 0 }
+            Documents: [{
+                Prefix: { type: String, required: false },
+                Next_Number: { type: Number, required: true },
+                Sufix: { type: String, required: false },
+                Status: { type: Number, required:true, Default: 1 }
+            }],
+            Status: { type: Number, required:true, Default: 1 }
         }],
+        Status: { type: Number, required:true, Default: 0 },
     }],
     Applications: [{
             Application_Id: { type: mongoose.Schema.Types.ObjectId, required: true, ref = 'Application' }
     }],
-    Status: { type: Number, required: true, Default: 0 }, 
+    Taxes: [{
+        Tax_Id: { type: mongoose.Schema.Types.ObjectId, required: true },
+        Name: { type: String, required: true },
+        Percentage: { type: Number, required: true },
+        Include_Tax: { type: Boolean, required: true },
+        Status: { type: Number, required: true, Default: 1 }
+    }],
+    Status: { type: Number, required: true, Default: 1 }, 
     Create_Date: { type: Date, required: true, default: Date.now },
     Modified_Date: Date
 });
