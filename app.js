@@ -28,7 +28,17 @@ const taxesRouter = require('./routes/taxes');
 const usersRouter = require('./routes/users');
 
 const frontURL = process.env.frontURL;
-
+/*setTimeout(function() {
+  mongoose.connect(
+    "mongodb+srv://" + process.env.MONG_USR + ":" + process.env.MONG_PWD + "@clusoctagt-u7ryt.mongodb.net/OCTAGT?retryWrites=true&w=majority",
+      { 
+        useUnifiedTopology: true,
+        useNewUrlParser: true    
+      }
+    );
+}, 30000);
+mongoose.Promise = global.Promise;
+*/
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
