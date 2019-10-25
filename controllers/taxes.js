@@ -1,4 +1,5 @@
 const Tax = require('../models/tax');
+const Log = require('../models/log');
 const db = require('../config/database');
 const uuidv4 = require('uuid/v4');
 
@@ -67,32 +68,48 @@ exports.create_tax = (req, res, next) => {
     });
 }
 
-exports.update_tax = (req, res, next) => {
-    const updateOps = {};  // [ { "propName": "name", "value": "Harry Potter" }]
-    for (const ops of req.body){
-        updateOps[ops.propName] = ops.value;
-    }
-    Tax.update({
-       /* Name: req.params.Name,
+exports.update_tax = (async (req, res, next) => {
+    /* Name: req.params.Name,
         Percentage: req.params.Percentage,
         Include_Tax: req.para.Include_Tax,
         Modified_Date: db.NOW,
         Status: req.params.Status*/
-        updateOps
-      },{
-        where: {
-            TaxId: taxId
-        }
-    })
-    .then(result => {
-        console.log(result);
-        res.status(200).json( result );
-    })
-    .catch(error => {
-        console.log('Error: ' + error);
-        res.status(500).json({ Error: error })
-    });
-}
+    const taxId = req.params.taxId;
+    const updateOps = {};  // [ { "propName": "name", "value": "Harry Potter" }]
+    for (const [key, value] of Object.entries(req.body)){
+        updateOps[key] = value;
+    }
+    
+    try {
+        const transaction = await db.transaction();
+        let tax = await Tax.update( updateOps, { where: { TaxId: taxId },  transaction });
+    
+        let log = await Log.create({
+            Table_Name: 'TAXES',
+            Old_Data: 'ABC',
+            New_Data: 'CDV',
+            CompanyId: '89b3fb09-9688-4b36-b3b9-c385c7dedbb0',
+            UserId: '564d231e-f90c-4eda-8ebd-1a327d74c226'
+        }, { transaction });
+
+        await transaction.commit();
+        console.log(tax);
+        //console.log(log);
+        res.status(200).json( { Message: 'Transaction succesfully' });
+    // .then(result => {
+    //     console.log(result);
+    //     res.status(200).json( result );
+    // })
+    // .catch(error => {
+    //     console.log('Error: ' + error);
+    //     res.status(500).json({ Error: error })
+    // });
+    }
+    catch (err)
+    {
+        if (transaction) await transaction.rollback();
+    }
+});
 
 exports.delete_tax = (req, res, next) => {
     const taxId = req.params.taxId;
