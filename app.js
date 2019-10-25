@@ -5,7 +5,16 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
+const db = require('./config/database');
+
+db
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 //const cashiersRouter = require('./routes/cashiers');
 //const companiesRouter = require('./routes/companies');
@@ -19,7 +28,7 @@ const taxesRouter = require('./routes/taxes');
 const usersRouter = require('./routes/users');
 
 const frontURL = process.env.frontURL;
-setTimeout(function() {
+/*setTimeout(function() {
   mongoose.connect(
     "mongodb+srv://" + process.env.MONG_USR + ":" + process.env.MONG_PWD + "@clusoctagt-u7ryt.mongodb.net/OCTAGT?retryWrites=true&w=majority",
       { 
@@ -29,7 +38,7 @@ setTimeout(function() {
     );
 }, 30000);
 mongoose.Promise = global.Promise;
-
+*/
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
