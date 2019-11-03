@@ -7,7 +7,7 @@ const customerSchema = mongoose.Schema({
     Include_Tax: { type: Boolean, required: true },
     Address : { type: String, required: true },
     House_No: { type: String, required: false },
-    Country: { type: String, required: true },
+    Country: { type: String, required: true, enum: (['Germany','Austria','Guatemala','El Salvador','Honduras','Nicaragua','Costa Rica','Panama','Mexico']) },
     State: { type: String, required: false } ,
     Phone: { type: String, required: false },
     Postal_Code: { type: String, required: false },

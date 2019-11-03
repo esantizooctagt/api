@@ -5,16 +5,17 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
-const db = require('./config/database');
+//const db = require('./config/database');
+const mongoose = require('mongoose');
 
-db
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// db
+//   .authenticate()
+//   .then(() => {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 
 //const cashiersRouter = require('./routes/cashiers');
 //const companiesRouter = require('./routes/companies');
@@ -26,19 +27,21 @@ db
 //const subscriptionsRouter = require('./routes/subscriptions');
 const taxesRouter = require('./routes/taxes');
 const usersRouter = require('./routes/users');
+const packagesRouter = require('./routes/packages')
 
 const frontURL = process.env.frontURL;
-/*setTimeout(function() {
+setTimeout(function() {
   mongoose.connect(
     "mongodb+srv://" + process.env.MONG_USR + ":" + process.env.MONG_PWD + "@clusoctagt-u7ryt.mongodb.net/OCTAGT?retryWrites=true&w=majority",
       { 
         useUnifiedTopology: true,
-        useNewUrlParser: true    
+        useNewUrlParser: true  ,
+        autoIndex: false  
       }
     );
 }, 30000);
 mongoose.Promise = global.Promise;
-*/
+
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,7 +50,7 @@ app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", frontURL);
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   if (req.method === 'OPTIONS'){
     res.header('Access-Control-Allow-Methods','PUT, POST, PATCH, DELETE, GET');
     return res.status(200).json({});
@@ -63,6 +66,7 @@ app.use('/invoices', invoicesRouter);
 app.use('/products', productsRouter);
 app.use('/stores', storesRouter);
 app.use('/subscriptions', subscriptionsRouter);*/
+app.use('/packages', packagesRouter)
 app.use('/taxes', taxesRouter);
 app.use('/users', usersRouter);
 

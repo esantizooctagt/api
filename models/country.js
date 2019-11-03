@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 const countrySchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -6,4 +6,4 @@ const countrySchema = mongoose.Schema({
     Name: { type: String, required: true },
 });
 
-module.exports = mongoose.model('Country', countrySchema);
+module.exports = mongoose.model('Country', countrySchema);*/

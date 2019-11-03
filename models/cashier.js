@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 const cashierSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -8,4 +8,4 @@ const cashierSchema = mongoose.Schema({
     Modified_Date: Date
 });
 
-module.exports = mongoose.model('Cashier', cashierSchema);
+module.exports = mongoose.model('Cashier', cashierSchema);*/

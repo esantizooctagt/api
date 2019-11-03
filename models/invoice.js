@@ -12,20 +12,23 @@ const invoiceSchema = mongoose.Schema({
     Total_Tax: { type: Number, required: true },
     Total_Discount: { type: Number, required: true },
     User_Id: { type: mongoose.Schema.Types.ObjectId, required: true, ref = 'User' },
-    Cashier_Id: { type: mongoose.Schema.Types.ObjectId, required: true, ref = 'Cashier' },
-    Company_Id: { type:mongoose.Schema.Types.ObjectId, required: true, ref = 'Company' },
+    Cashier: { 
+        Cashier_Id: {type: mongoose.Schema.Types.ObjectId, required: true },
+        Description: { type: String, required: true }
+    },
+    Company_Id: { type:mongoose.Schema.Types.ObjectId, required: true },
     Customer: {
-        Customer_Id: { type:mongoose.Schema.Types.ObjectId, required: true, ref = 'Customer' },
+        Customer_Id: { type:mongoose.Schema.Types.ObjectId, required: true },
         Name: { type: String, required: true },
         Address : { type: String, required: true },
         House_No: { type: String, required: false },
-        Postal_Code: { type: String, required: false },
+        //Postal_Code: { type: String, required: false },
         Phone: { type: String, required: false },
         Email: { type: String, required: false },
         Tax_Number: { type: String, required: true },
         Is_Exent: { type: Boolean, required: true, Default: false },
         Reason: { type: String, required: false },
-        Status: { type: Number, required:true, Default: 1 }
+        Status: { type: Number, required:true, Default: 1, min: 0, max: 4 }
     },
     Items: [{
         Line_No: { type: Number, required: true },
@@ -35,7 +38,7 @@ const invoiceSchema = mongoose.Schema({
                     Img_Path: { type: String, required = false }
                  },
         Name: { type: String, required: true },
-        Type: { type: String, required: true },
+        Type: { type: String, enum: Object.values(["goods", "services"]), required: true },
         Tax: { 
                 Tax_Id: { type: mongoose.Schema.Types.ObjectId, required: true },
                 Name: { type: String, required: true },
@@ -50,7 +53,7 @@ const invoiceSchema = mongoose.Schema({
         Delivery_Date: { type: Date, required: false }
 
     }],
-    Status: { type: Number, required: true, Default: 1 }, 
+    Status: { type: Number, required: true, Default: 1, min: 0, max: 4 }, 
     Create_Date: { type: Date, required: true, default: Date.now },
     Modified_Date: Date
 });

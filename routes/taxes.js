@@ -4,7 +4,7 @@ const router = express.Router();
 
 const TaxesController = require('../controllers/taxes');
 
-router.get('/:companyId', TaxesController.taxes_get_all);
+router.get('/cId/:companyId', TaxesController.taxes_get_all);
 
 router.get('/:taxId', checkAuth, TaxesController.tax_get_one);
 

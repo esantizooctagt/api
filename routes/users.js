@@ -1,16 +1,8 @@
 const express = require('express');
-//const sql = require("mssql");
-const jwt = require('jsonwebtoken');
-//const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('../middleware/check-auth');
 const router = express.Router();
 
-//const dbConn = process.env.sqlConn;
-//const pool = new sql.ConnectionPool(dbConn);
-
-//pool.connect(err => {
-  //console.log(err);
-  //res.status(404).send('Not found');
-//})
+const UserController = require('../controllers/users');
 
 const myLogger = function (req, res, next) {
 //  //console.log('req: ' + req);
@@ -47,35 +39,12 @@ router.get('/', function(req, res, next) {
     }
   })()*/
 });
-//checkAuth
-router.post('/login', function(req, res, next){
-  (async function() {
-    //await pool;
-    try{
-      const { email, password } = req.body
-      const user =  { userId: 'fagb1234', userName: 'esantizo', email: email, password: password, isAdmin : 1, companyId: 'fa123', storeId: 'fg345', status: 1 }  //await User.findByCredentials(email, password)
-      if (!user) {
-        return res.status(401).send({error: 'Login failed! Check authentication credentials'})
-      }
-      const token = jwt.sign(
-        {
-          email: user.email, 
-          userId: user.userId
-        }, 
-        process.env.JWT_KEY, 
-        {
-          expiresIn: "10h"
-        }
-      );
-      
-      res.send({ user, token })
-      //sql.close()
-    } catch (err) {
-      console.log(err);
-      res.status(400).send(error)
-        // ... error checks
-    }
-  })()
-});
+
+
+router.post('/login', UserController.users_login);
+
+router.post('/signup', UserController.create_user);
+
+router.delete('/:userId', UserController.delete_user);
 
 module.exports = router;
