@@ -6,6 +6,8 @@ const TaxesController = require('../controllers/taxes');
 
 router.get('/cId/:companyId', TaxesController.taxes_get_all);
 
+router.get('/cId/:companyId/:page', TaxesController.taxes_get_all);
+
 router.get('/:taxId', checkAuth, TaxesController.tax_get_one);
 
 router.post('/', checkAuth, TaxesController.create_tax);

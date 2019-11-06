@@ -5,17 +5,18 @@ const app = express();
 const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
-//const db = require('./config/database');
+const db = require('./config/database');
 const mongoose = require('mongoose');
 
-// db
-//   .authenticate()
-//   .then(() => {
-//     console.log('Connection has been established successfully.');
-//   })
-//   .catch(err => {
-//     console.error('Unable to connect to the database:', err);
-//   });
+
+db
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 //const cashiersRouter = require('./routes/cashiers');
 //const companiesRouter = require('./routes/companies');

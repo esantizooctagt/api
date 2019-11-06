@@ -43,8 +43,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', UserController.users_login);
 
-router.post('/signup', UserController.create_user);
+// router.post('/signup', UserController.create_user);
 
-router.delete('/:userId', UserController.delete_user);
+// router.delete('/:userId', UserController.delete_user);
 
 module.exports = router;
