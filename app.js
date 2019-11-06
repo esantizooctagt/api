@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const db = require('./config/database');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 
 db
@@ -31,17 +31,17 @@ const usersRouter = require('./routes/users');
 const packagesRouter = require('./routes/packages')
 
 const frontURL = process.env.frontURL;
-setTimeout(function() {
-  mongoose.connect(
-    "mongodb+srv://" + process.env.MONG_USR + ":" + process.env.MONG_PWD + "@clusoctagt-u7ryt.mongodb.net/OCTAGT?retryWrites=true&w=majority",
-      { 
-        useUnifiedTopology: true,
-        useNewUrlParser: true  ,
-        autoIndex: false  
-      }
-    );
-}, 30000);
-mongoose.Promise = global.Promise;
+// setTimeout(function() {
+//   mongoose.connect(
+//     "mongodb+srv://" + process.env.MONG_USR + ":" + process.env.MONG_PWD + "@clusoctagt-u7ryt.mongodb.net/OCTAGT?retryWrites=true&w=majority",
+//       { 
+//         useUnifiedTopology: true,
+//         useNewUrlParser: true  ,
+//         autoIndex: false  
+//       }
+//     );
+// }, 30000);
+// mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));
 app.use(helmet());

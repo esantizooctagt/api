@@ -45,37 +45,8 @@ const Tax = db.define('taxes', {
         type: Sequelize.DATE
     }
 }, { hasTrigger: true })
+
 module.exports = Tax;
-
-// const mongoose = require('mongoose');
-// // const history = require('mongoose-history');
-// const diffHistory = require('mongoose-diff-history/diffHistory');
-
-// const taxSchema = mongoose.Schema({
-//     _id: { type: mongoose.Schema.Types.ObjectId,  required: true },
-//     Name: { type: String, required: true },
-//     Percentage: { type: Number, required: true },
-//     Include_Tax: { type: Boolean, required: true },
-//     Status: { type: Number, required: true, Default: 1 },
-//     Company_Id: { type: mongoose.Schema.Types.ObjectId,  required: true },
-//     Create_Date: { type: Date, required: true, Default: Date.Now },
-//     Modified_Date: { type: Date, required: false }
-// });
-
-// taxSchema.pre('updateOne', function () {
-//     this.set({ Modified_Date: new Date() });
-//     //next();
-// });
-
-// // taxSchema.pre('save', function preSave(next) {
-// //     this.set({ Create_Date: new Date() });
-// //     next();
-// // });
-
-// // taxSchema.plugin(history);
-// taxSchema.plugin(diffHistory.plugin);
-
-// module.exports = mongoose.model('Tax', taxSchema);
 // /** 
 // Status
 // 0 = Inactive

@@ -3,6 +3,10 @@
         "JWT_KEY" : "OctaGTOnline3652019",
         "frontURL" : "http://localhost:4200",
         "MONG_USR" : "vladimir",
-        "MONG_PWD" : "Octagt2019%24"
+        "MONG_PWD" : "Octagt2019%24",
+        "SQL_HOST": "localhost",
+        "SQL_DB" : "OCTAGT",
+        "SQL_USR": "sa",
+        "SQL_PWD": "vladimir"
     }
 }

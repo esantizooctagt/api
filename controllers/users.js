@@ -1,8 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const Log = require('../models/log');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 exports.users_login = (req, res, next) => {
     const { userName, password } = req.body;
@@ -10,8 +9,6 @@ exports.users_login = (req, res, next) => {
     User.findOne({ where: { UserName: userName }})
         .then(data => {
             if (data != null) {
-                console.log('compare:' + data.Password);
-                console.log('pass:'+password);
                 bcrypt.compare(password, data.Password, (err, result) => {
                     if (err){
                         return res.status(401).json({ Message: 'Auth failed' });
@@ -47,51 +44,6 @@ exports.users_login = (req, res, next) => {
             res.status(500).json({ Error: error })
         });
 }
-
-// exports.users_login = (req, res, next) => {
-//     const { userName, password } = req.body;
-//     User.findOne({ User_Name: userName })
-//         .exec()
-//         .then(data => {
-//             if (data != null) {
-//                 if (data.length < 1) {
-//                     return res.status(401).json({ Message:  'Auth failed' });
-//                 }
-//                 bcrypt.compare(password, data.Password, (err, result) => {
-//                     if (err){
-//                         return res.status(401).json({ Message: 'Auth failed' });
-//                     }
-//                     if (result){
-//                         const user = 
-//                         {
-//                             User_Id: data._id,
-//                             User_Name: data.User_Name,
-//                             Email: data.Email,
-//                             Is_Admin: data.Is_Admin,
-//                             Company_Id: data.Company_Id
-//                         }
-//                         const token = jwt.sign(
-//                         {
-//                             Email: data.Email, 
-//                             User_Id: data._id
-//                         }, 
-//                         process.env.JWT_KEY, 
-//                         {
-//                             expiresIn: "10h"
-//                         });
-
-//                         res.status(200).send( { user, token } );
-//                     }
-//                 });
-//             } else {
-//                 return res.status(401).json({ Message:  'Auth failed' });
-//             }
-//         })
-//         .catch(error => {
-//             console.log('Error: ' + error);
-//             res.status(500).json({ Error: error })
-//         });
-// }
 
 // exports.create_user = (req, res, next) => {
 //     const { userName, email, password, isAdmin, companyId } = req.body;

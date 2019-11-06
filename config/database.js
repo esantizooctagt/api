@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-module.exports = new Sequelize('OCTAGT', 'sa', 'vladimir', {
-    host: 'localhost',
+module.exports = new Sequelize(process.env.SQL_DB, process.env.SQL_USR, process.env.SQL_PWD, {
+    host: process.env.SQL_HOST,
     dialect: 'mssql',
     pool : 
       { 
@@ -18,12 +18,3 @@ module.exports = new Sequelize('OCTAGT', 'sa', 'vladimir', {
 Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
   return this._applyTimezone(date, options).format('YYYY-MM-DD HH:mm:ss.SSS');
 };
-
-/*sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-});*/
