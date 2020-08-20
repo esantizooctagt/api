@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "async": "^3.1.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "debug": "~2.6.9",
     "express": "^4.16.4",
     "helmet": "^3.21.1",
