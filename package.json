@@ -19,7 +19,7 @@
     "sequelize": "^5.21.2",
     "tedious": "^6.6.0",
     "uuid": "^3.3.3",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
